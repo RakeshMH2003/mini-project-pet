@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Adopt a Pet - AdoptMe</title>
+
+  <!-- reuse pet.css for topbar and base styles -->
+  <link rel="stylesheet" href="pet.css" />
+
+  <!-- page-specific styles to match about.html style + dropdown recommendation -->
+  <style>
+    .adopt-container {
+      max-width: 900px;
+      margin: 120px auto 48px; /* room under fixed topbar */
+      padding: 0 12px;
+    }
+
+    .adopt-card {
+      background: #fffaf2;
+      border: 2px solid #111;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      padding: 22px;
+      margin: 0 auto;
+    }
+
+    .adopt-header h1 {
+      margin: 0 0 6px 0;
+      color: brown;
+      font-size: 1.4rem;
+    }
+    .adopt-header p.lead {
+      margin: 0 0 14px 0;
+      color: #444;
+    }
+
+    form.adopt-form { display: block; }
+    .field { margin-bottom: 14px; }
+    label { display:block; margin-bottom:6px; font-weight:600; color:#222; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
+    select {
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      border:1px solid rgba(0,0,0,0.12);
+      background:#fff;
+      font-size:0.97rem;
+      color:#222;
+      resize: vertical;
+      transition: box-shadow 160ms ease, border-color 160ms ease;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline:none;
+      border-color: sandybrown;
+      box-shadow: 0 6px 18px rgba(255,160,64,0.08);
+    }
+
+    /* Dropdown styling recommendation: custom arrow, consistent look */
+    select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='brown'><path d='M7 10l5 5 5-5z'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px;
+      padding-right: 40px; /* space for arrow */
+      cursor: pointer;
+    }
+
+    /* small row for contact fields */
+    .row { display:flex; gap:10px; }
+    .row .col { flex:1; }
+
+    /* helper text */
+    .hint { font-size:0.9rem; color:#555; margin-top:6px; }
+
+    /* agreement + submit */
+    .actions { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:12px; flex-wrap:wrap; }
+    .agree { display:flex; align-items:center; gap:8px; }
+    .submit-btn {
+      background: brown;
+      color: #fff;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    .submit-btn:active { transform: translateY(1px); }
+
+    /* responsive */
+    @media (max-width: 720px) {
+      .row { flex-direction:column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- topbar -->
+  <header class="topbar" role="banner">
+    <div class="topbar-inner">
+      <h2 class="brand"><a href="Pet.html">adoptme.com</a></h2>
+      <nav class="nav" aria-label="Main navigation">
+        <a href="Pet.html">Pets</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="adopt-container">
+      <div class="adopt-card" role="form" aria-labelledby="adopt-heading">
+        <div class="adopt-header">
+          <h1 id="adopt-heading">Adoption Application</h1>
+          <p class="lead">Fill this form to start the adoption process. We will contact you for next steps.</p>
+        </div>
+
+        <!-- action can be changed to your backend; for now it just uses GET for demo -->
+        <form class="adopt-form" action="process_adoption.php" method="post" novalidate>
+          <!-- Personal info -->
+          <div class="field">
+            <label for="fullName">Full name</label>
+            <input id="fullName" name="name" type="text" placeholder="Enter your full name" required />
+          </div>
+
+          <div class="row">
+            <div class="col field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" placeholder="name@example.com" required />
+            </div>
+            <div class="col field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="address">Address</label>
+            <textarea id="address" name="address" rows="2" placeholder="Street, city, state / province"></textarea>
+          </div>
+
+          <!-- Pet selection (dropdown with all 15 pets) -->
+          <div class="field">
+            <label for="petSelect">Select the pet you want to adopt</label>
+            <select id="petSelect" name="pet" required>
+              <option value="" disabled selected>Select a pet...</option>
+              <option value="Jerry">Jerry</option>
+              <option value="Tom">Tom</option>
+              <option value="Buddy">Buddy</option>
+              <option value="Luna">Luna</option>
+              <option value="Max">Max</option>
+              <option value="Whiskers">Whiskers</option>
+              <option value="Bruno">Bruno</option>
+              <option value="Pixie">Pixie</option>
+              <option value="Oscar">Oscar</option>
+              <option value="Milo">Milo</option>
+              <option value="Rocky">Rocky</option>
+              <option value="Bella">Bella</option>
+              <option value="Toby">Toby</option>
+              <option value="Neko">Neko</option>
+              <option value="Simba">Simba</option>
+            </select>
+
+            <div class="hint">
+              Choose one pet from the list. You will be contacted if the pet is already adopted.
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="visitDate">Preferred visit / pickup date</label>
+            <input id="visitDate" name="visitDate" type="date" />
+          </div>
+
+          <div class="field">
+            <label for="reason">Why do you want to adopt this pet?</label>
+            <textarea id="reason" name="reason" rows="4" placeholder="Tell us briefly..."></textarea>
+          </div>
+
+          <div class="actions">
+            <label class="agree">
+              <input type="checkbox" name="agree" required />
+              <span>I confirm that the information is accurate and I agree to the adoption process.</span>
+            </label>
+
+            <div style="margin-left:auto;">
+              <button type="submit" class="submit-btn">Submit Application</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer aria-hidden="true"></footer>
+</body>
+</html>
